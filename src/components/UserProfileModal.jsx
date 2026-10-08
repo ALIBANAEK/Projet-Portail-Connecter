@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { User, KeyRound, Eye, EyeOff, Trash2, LogOut, X, AlertTriangle } from "lucide-react";
+import { User, KeyRound, Eye, EyeOff, Trash2, LogOut, X, AlertTriangle, Camera, Trash } from "lucide-react";
 
 export function UserProfileModal({ isOpen, onClose }) {
-  const { currentUser, deleteAccount, logout } = useAuth();
+  const { currentUser, deleteAccount, updateAvatar, logout } = useAuth();
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
   const [showPassword, setShowPassword] = useState(false);
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
@@ -26,6 +27,26 @@ export function UserProfileModal({ isOpen, onClose }) {
     }
   };
 
+  // Gestion du téléversement de la photo de profil
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("La photo ne doit pas dépasser 2 Mo.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        updateAvatar(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemovePhoto = () => {
+    updateAvatar(null);
+  };
+
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -33,7 +54,11 @@ export function UserProfileModal({ isOpen, onClose }) {
         <div className="modal-header">
           <div className="modal-title-wrap">
             <div className="avatar-badge">
-              <User size={22} />
+              {currentUser.avatar ? (
+                <img src={currentUser.avatar} alt="Avatar" className="avatar-img-circle" />
+              ) : (
+                <User size={22} />
+              )}
             </div>
             <div>
               <h3>Mon Profil Utilisateur</h3>
@@ -47,6 +72,61 @@ export function UserProfileModal({ isOpen, onClose }) {
 
         {/* Modal Body */}
         <div className="modal-body">
+          {/* Photo de profil section */}
+          <div className="profile-photo-section">
+            <div className="profile-photo-wrapper">
+              {currentUser.avatar ? (
+                <img src={currentUser.avatar} alt="Photo de profil" className="profile-avatar-large" />
+              ) : (
+                <div className="profile-avatar-placeholder">
+                  <User size={38} />
+                </div>
+              )}
+
+              <button
+                type="button"
+                className="photo-upload-trigger-btn"
+                onClick={() => fileInputRef.current?.click()}
+                title="Changer la photo de profil"
+              >
+                <Camera size={16} />
+              </button>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handlePhotoUpload}
+              />
+            </div>
+
+            <div className="photo-actions">
+              <span className="photo-title">Photo de profil</span>
+              <div className="photo-btn-row">
+                <button
+                  type="button"
+                  className="photo-change-btn"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <Camera size={14} />
+                  <span>{currentUser.avatar ? "Changer la photo" : "Ajouter une photo"}</span>
+                </button>
+                {currentUser.avatar && (
+                  <button
+                    type="button"
+                    className="photo-remove-btn"
+                    onClick={handleRemovePhoto}
+                    title="Supprimer la photo"
+                  >
+                    <Trash size={14} />
+                    <span>Retirer</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* User identifier card */}
           <div className="info-group">
             <label className="info-label">
@@ -101,9 +181,8 @@ export function UserProfileModal({ isOpen, onClose }) {
             </div>
           )}
 
-          {/* Danger Zone: Delete Account */}
-          <div className="danger-zone">
-            <h4>Zone de danger</h4>
+          {/* Supprimer le compte (Zone de danger retirée) */}
+          <div className="account-delete-container">
             {!confirmDeleteOpen ? (
               <button
                 type="button"

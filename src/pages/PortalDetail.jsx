@@ -17,9 +17,6 @@ import {
   Check,
   X,
   Crown,
-  KeyRound,
-  Eye,
-  EyeOff,
 } from "lucide-react";
 
 export function PortalDetail() {
@@ -33,13 +30,6 @@ export function PortalDetail() {
   // Édition du nom du portail
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameInput, setNameInput] = useState("");
-
-  // Affichage du code digicode
-  const [showDigicode, setShowDigicode] = useState(false);
-
-  // Test du digicode (simulation digicode)
-  const [inputCode, setInputCode] = useState("");
-  const [codeFeedback, setCodeFeedback] = useState(null);
 
   const portal = getPortalById(id);
 
@@ -90,33 +80,6 @@ export function PortalDetail() {
 
   const handleCancelEditName = () => {
     setIsEditingName(false);
-  };
-
-  // Simulation test digicode
-  const handleVerifyDigicode = (e) => {
-    e.preventDefault();
-    if (!inputCode.trim()) return;
-
-    if (inputCode.trim() === portal.digicode) {
-      setCodeFeedback({
-        type: "success",
-        message: "Code valide ! Accès déverrouillé.",
-      });
-      // Si fermé, on propose ou déclenche l'ouverture
-      if (portal.currentState === PORTAL_STATES.CLOSED) {
-        updatePortalState(portal.id, PORTAL_STATES.OPEN);
-        showToast("success", "Code digicode validé : Portail ouvert automatiquement !");
-      }
-    } else {
-      setCodeFeedback({
-        type: "error",
-        message: "Code incorrect. Veuillez réessayer.",
-      });
-    }
-
-    setTimeout(() => {
-      setCodeFeedback(null);
-    }, 3500);
   };
 
   const getStateBadgeClass = (state) => {
@@ -253,7 +216,7 @@ export function PortalDetail() {
         </div>
       </div>
 
-      {/* Digicode and State Transitions Grid */}
+      {/* State Transitions Grid */}
       <div className="detail-grid">
         {/* Left Column: Possible transitions action box */}
         <div className="detail-section-card transition-action-card">
@@ -302,61 +265,6 @@ export function PortalDetail() {
             <span>
               Les transitions modifient instantanément l'état dans la maquette et alimentent le journal d'activité.
             </span>
-          </div>
-
-          {/* Digicode Control & Simulation */}
-          <div className="digicode-section-box">
-            <div className="digicode-header">
-              <div className="digicode-title-wrap">
-                <KeyRound size={18} className="text-primary" />
-                <h4>Contrôle d'accès Digicode</h4>
-              </div>
-
-              {portal.digicode && (
-                <div className="digicode-display-wrap">
-                  <span className="digicode-label">Code configuré :</span>
-                  <span className="digicode-val">
-                    {showDigicode ? portal.digicode : "••••"}
-                  </span>
-                  <button
-                    type="button"
-                    className="toggle-digicode-btn"
-                    onClick={() => setShowDigicode(!showDigicode)}
-                    title={showDigicode ? "Masquer le digicode" : "Afficher le digicode"}
-                  >
-                    {showDigicode ? <EyeOff size={15} /> : <Eye size={15} />}
-                  </button>
-                </div>
-              )}
-            </div>
-
-            <form onSubmit={handleVerifyDigicode} className="digicode-tester-form">
-              <label htmlFor="test-code">Tester le digicode physique :</label>
-              <div className="digicode-input-group">
-                <input
-                  id="test-code"
-                  type="text"
-                  placeholder="Tapez le code (ex: 1234)"
-                  value={inputCode}
-                  onChange={(e) => setInputCode(e.target.value)}
-                  className="digicode-input"
-                />
-                <button type="submit" className="test-code-btn">
-                  Valider le code
-                </button>
-              </div>
-
-              {codeFeedback && (
-                <div className={`code-feedback ${codeFeedback.type}`}>
-                  {codeFeedback.type === "success" ? (
-                    <CheckCircle2 size={16} />
-                  ) : (
-                    <HelpCircle size={16} />
-                  )}
-                  <span>{codeFeedback.message}</span>
-                </div>
-              )}
-            </form>
           </div>
         </div>
 

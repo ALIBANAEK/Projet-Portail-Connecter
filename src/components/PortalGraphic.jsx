@@ -7,9 +7,9 @@ export function PortalGraphic({ state, size = "large" }) {
   const getStatusColor = () => {
     switch (state) {
       case PORTAL_STATES.OPEN:
-        return "var(--palette-deep-blue)";
+        return "var(--palette-terracotta)";
       case PORTAL_STATES.HALF_OPEN:
-        return "var(--palette-ocean-blue)";
+        return "var(--palette-sand)";
       case PORTAL_STATES.CLOSED:
       default:
         return "var(--danger)";
@@ -40,8 +40,8 @@ export function PortalGraphic({ state, size = "large" }) {
 
         {/* Center state badge icon */}
         <div className="portal-center-indicator" style={{ borderColor: getStatusColor() }}>
-          {state === PORTAL_STATES.OPEN && <Unlock size={isLarge ? 26 : 18} color="var(--palette-deep-blue)" />}
-          {state === PORTAL_STATES.HALF_OPEN && <ShieldAlert size={isLarge ? 26 : 18} color="var(--palette-ocean-blue)" />}
+          {state === PORTAL_STATES.OPEN && <Unlock size={isLarge ? 26 : 18} color="var(--palette-terracotta)" />}
+          {state === PORTAL_STATES.HALF_OPEN && <ShieldAlert size={isLarge ? 26 : 18} color="var(--palette-taupe)" />}
           {state === PORTAL_STATES.CLOSED && <Lock size={isLarge ? 26 : 18} color="var(--danger)" />}
         </div>
       </div>

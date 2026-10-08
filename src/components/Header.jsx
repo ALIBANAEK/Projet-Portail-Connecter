@@ -24,7 +24,11 @@ export function Header() {
                 aria-label="Mon compte"
               >
                 <div className="user-icon-circle">
-                  <User size={20} />
+                  {currentUser.avatar ? (
+                    <img src={currentUser.avatar} alt="Avatar" className="user-header-avatar" />
+                  ) : (
+                    <User size={20} />
+                  )}
                 </div>
                 <div className="user-text-pill">
                   <span className="user-name">{currentUser.username}</span>

@@ -1,52 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Palette Color Hunt: 3674b5 / 578fca / a1e3f9 / d1f8ef */
-  --palette-deep-blue: #3674B5;
-  --palette-ocean-blue: #578FCA;
-  --palette-sky-cyan: #A1E3F9;
-  --palette-mint-cyan: #D1F8EF;
+  /* Palette Color Hunt: #B77466 / #FFE1AF / #E2B59A / #957C62 */
+  --palette-terracotta: #B77466;
+  --palette-cream: #FFE1AF;
+  --palette-sand: #E2B59A;
+  --palette-taupe: #957C62;
 
   /* Theme tokens */
-  --primary: #3674B5;
-  --primary-hover: #295b91;
-  --primary-secondary: #578FCA;
-  --primary-light: #e8f7fd;
-  --primary-subtle: #d1f8ef;
-  --primary-glow: rgba(54, 116, 181, 0.2);
+  --primary: #B77466;
+  --primary-hover: #9d5a4d;
+  --primary-secondary: #E2B59A;
+  --primary-dark: #957C62;
+  --primary-light: #fff6e8;
+  --primary-subtle: #FFE1AF;
+  --primary-glow: rgba(183, 116, 102, 0.25);
 
-  /* Status Colors (Harmonized with palette) */
-  --success: #0d9488;
-  --success-bg: #D1F8EF;
-  --success-border: #A1E3F9;
-  --success-text: #115e59;
+  /* Status Colors */
+  --success: #2d8659;
+  --success-bg: #eaf7f0;
+  --success-border: #a3deb8;
+  --success-text: #195b3b;
 
-  --warning: #d97706;
-  --warning-bg: #fef3c7;
-  --warning-border: #fde68a;
-  --warning-text: #92400e;
+  --warning: #B77466;
+  --warning-bg: #FFE1AF;
+  --warning-border: #E2B59A;
+  --warning-text: #733c32;
 
-  --danger: #e11d48;
-  --danger-bg: #ffe4e6;
-  --danger-border: #fecdd3;
-  --danger-text: #9f1239;
+  --danger: #c2410c;
+  --danger-bg: #ffedd5;
+  --danger-border: #fed7aa;
+  --danger-text: #9a3412;
 
   /* Backgrounds & Text */
-  --bg-page: #f0f9fc;
+  --bg-page: #fdfaf6;
   --bg-card: #ffffff;
-  --bg-subtle: #e6f6fa;
+  --bg-subtle: #faf1e6;
 
-  --text-main: #142a42;
-  --text-muted: #486581;
-  --text-light: #7c9eb2;
+  --text-main: #3a281e;
+  --text-muted: #6b5344;
+  --text-light: #957C62;
 
-  --border: #c8e6f3;
-  --border-focus: #578FCA;
+  --border: #edd5c4;
+  --border-focus: #B77466;
 
-  --shadow-sm: 0 1px 3px 0 rgba(54, 116, 181, 0.08);
-  --shadow-md: 0 4px 10px -2px rgba(54, 116, 181, 0.12), 0 2px 5px -2px rgba(54, 116, 181, 0.06);
-  --shadow-lg: 0 12px 20px -4px rgba(54, 116, 181, 0.14), 0 4px 8px -3px rgba(54, 116, 181, 0.08);
-  --shadow-xl: 0 22px 30px -8px rgba(54, 116, 181, 0.18), 0 8px 12px -5px rgba(54, 116, 181, 0.08);
+  --shadow-sm: 0 1px 3px 0 rgba(149, 124, 98, 0.08);
+  --shadow-md: 0 4px 10px -2px rgba(183, 116, 102, 0.12), 0 2px 5px -2px rgba(149, 124, 98, 0.06);
+  --shadow-lg: 0 12px 20px -4px rgba(183, 116, 102, 0.15), 0 4px 8px -3px rgba(149, 124, 98, 0.08);
+  --shadow-xl: 0 22px 30px -8px rgba(149, 124, 98, 0.2), 0 8px 12px -5px rgba(183, 116, 102, 0.1);
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -66,8 +67,8 @@ body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--bg-page);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(209, 248, 239, 0.6) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(161, 227, 249, 0.45) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(255, 225, 175, 0.45) 0px, transparent 55%),
+    radial-gradient(at 100% 100%, rgba(226, 181, 154, 0.35) 0px, transparent 50%);
   background-attachment: fixed;
   color: var(--text-main);
   line-height: 1.5;

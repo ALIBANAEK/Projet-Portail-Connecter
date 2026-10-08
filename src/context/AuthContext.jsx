@@ -65,7 +65,7 @@ export function AuthProvider({ children }) {
   };
 
   // Register handler
-  const register = ({ username, email, password }) => {
+  const register = ({ username, email, password, avatar = null }) => {
     const cleanUsername = username.trim();
     const cleanEmail = email.trim().toLowerCase();
 
@@ -91,6 +91,7 @@ export function AuthProvider({ children }) {
       username: cleanUsername,
       email: cleanEmail,
       password: password,
+      avatar: avatar,
       createdAt: new Date().toISOString().split("T")[0],
     };
 
@@ -99,6 +100,16 @@ export function AuthProvider({ children }) {
     setCurrentUser(newUser);
 
     return { success: true, user: newUser };
+  };
+
+  // Update profile photo
+  const updateAvatar = (avatarData) => {
+    if (!currentUser) return;
+    const updatedUser = { ...currentUser, avatar: avatarData };
+    setCurrentUser(updatedUser);
+    setUsers((prev) =>
+      prev.map((u) => (u.id === currentUser.id ? updatedUser : u))
+    );
   };
 
   // Delete account handler
@@ -122,6 +133,7 @@ export function AuthProvider({ children }) {
         users,
         login,
         register,
+        updateAvatar,
         deleteAccount,
         logout,
       }}
